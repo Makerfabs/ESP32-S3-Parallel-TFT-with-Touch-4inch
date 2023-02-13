@@ -1,10 +1,11 @@
 # Makerfabs ESP32-S3 Parallel TFT with Touch 4inch
 ```c++
 /*
-Version:		V1.0
+Version:		V1.1
 Author:			Vincent
 Create Date:	2023/2/4
 Note:
+		V1.1: Add example and update readme.
 */
 ```
 
@@ -26,7 +27,7 @@ Note:
 
 Product Link ：[ESP32-S3 Parallel TFT with Touch 4.0" 480*480 ST7701](https://www.makerfabs.com/esp32-s3-parallel-tft-with-touch-4-inch.html)
 
-Wiki Link :
+Wiki Link : [ESP32-S3 Parallel 4.0" TFT with Touch](https://wiki.makerfabs.com/ESP32_S3_Parallel_4.0_TFT_with_Touch.html)
 
 
 
