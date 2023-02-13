@@ -25,10 +25,25 @@
 #define AUDIO_FILENAME_02 "/SoundofSilence.mp3"
 #define AUDIO_FILENAME_03 "/MoonlightBay.mp3"
 
-String image_list[3] = {
-    "/image01.jpg",
-    "/image02.jpg",
-    "/image03.jpg"};
+String image_list[18] = {
+    "/1.jpg",
+    "/2.jpg",
+    "/3.jpg",
+    "/4.jpg",
+    "/5.jpg",
+    "/6.jpg",
+    "/7.jpg",
+    "/8.jpg",
+    "/9.jpg",
+    "/10.jpg",
+    "/11.jpg",
+    "/12.jpg",
+    "/13.jpg",
+    "/14.jpg",
+    "/15.jpg",
+    "/16.jpg",
+    "/17.jpg",
+    "/18.jpg"};
 
 Arduino_ESP32RGBPanel *bus = new Arduino_ESP32RGBPanel(1 /* CS */, 12 /* SCK */, 11 /* SDA */, 45 /* DE */, 4 /* VSYNC */, 5 /* HSYNC */, 21 /* PCLK */, 39 /* R0 */, 40 /* R1 */, 41 /* R2 */, 42 /* R3 */, 2 /* R4 */, 0 /* G0/P22 */, 9 /* G1/P23 */, 14 /* G2/P24 */, 47 /* G3/P25 */, 48 /* G4/P26 */, 3 /* G5 */, 6 /* B0 */, 7 /* B1 */, 15 /* B2 */, 16 /* B3 */, 8 /* B4 */
 );
@@ -69,13 +84,6 @@ void setup()
 
 void loop()
 {
-    // if ((millis() - runtime) > 1000)
-    // {
-    //     jpegDraw(image_list[image_index++ % 3].c_str(), jpegDrawCallback, true, 0, 0, gfx->width(), gfx->height());
-
-    //     runtime = millis();
-    // }
-    // audio.loop();
 }
 
 static int jpegDrawCallback(JPEGDRAW *pDraw)
@@ -89,9 +97,10 @@ void Task_TFT(void *pvParameters) // This is a task.
 {
     while (1) // A Task shall never return or exit.
     {
-        jpegDraw(image_list[image_index++ % 3].c_str(), jpegDrawCallback, true, 0, 0, gfx->width(), gfx->height());
+        Serial.println(image_list[image_index % 18]);
+        jpegDraw(image_list[image_index++ % 18].c_str(), jpegDrawCallback, true, 0, 0, gfx->width(), gfx->height());
 
-        vTaskDelay(1000);
+        vTaskDelay(2000);
     }
 }
 
@@ -99,4 +108,12 @@ void Task_Audio(void *pvParameters) // This is a task.
 {
     while (1)
         audio.loop();
+}
+
+void audio_eof_mp3(const char *info)
+{ // end of file
+    Serial.print("eof_mp3     ");
+    Serial.println(info);
+
+    audio.connecttoFS(SD, AUDIO_FILENAME_01); //"/ChildhoodMemory.mp3"
 }

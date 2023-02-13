@@ -10,6 +10,8 @@ Note:
 
 [toc]
 
+![main](md_pic/main.jpg)
+
 # Makerfabs
 
 [Makerfabs home page](https://www.makerfabs.com/)
@@ -22,17 +24,24 @@ Note:
 
 ## Intruduce
 
-Product Link ：
+Product Link ：[ESP32-S3 Parallel TFT with Touch 4.0" 480*480 ST7701](https://www.makerfabs.com/esp32-s3-parallel-tft-with-touch-4-inch.html)
 
 Wiki Link :
 
 
 
+The Latest ESP32-S3 4.0 inch display with 480*480 resolution, it integrated display/ touch/ audio speaker/ Lipo charger, to make this product ideal for applications such as IoT controlling, electronic photo frame, etc.
+
 ## Feature
 
+- 4 inch RGB IPS display, it communicates with the controller ESP32S3 with 3SPI+RGB5/6/5 interface, with FPS >80;
+- 5 points Touch;
+- Onboard 16G SD card for storage;
+- Lipo battery socket and charger, support any 3.7v lipo battery;
+- On board speaker connector. This product is shipped with a 3 ohm 4w, 3528 speaker, the voice loud and clean, suitable for most applications;
+- 2x Onboard Mabee connectors, support multiple Mabee/ Grove modules;
 
-
-
+![main](md_pic/back.jpg)
 
 # Code
 
