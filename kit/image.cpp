@@ -18,7 +18,8 @@ void img_init()
         Serial.println(img_list[i]);
     }
 
-    img_display(img_list[img_index]);
+    // img_display(img_list[img_index]);
+    img_display(0, 0, 480, 480, img_list[img_index]);
 }
 
 int get_img_list(fs::FS &fs, const char *dirname, String *list, int length)
@@ -61,9 +62,9 @@ int get_img_list(fs::FS &fs, const char *dirname, String *list, int length)
     return i;
 }
 
-void img_display(String img_name)
+void img_display(int x, int y, int w, int h, String img_name)
 {
-    jpegDraw(img_name.c_str(), jpegDrawCallback, true, 0, 0, gfx->width(), gfx->height());
+    jpegDraw(img_name.c_str(), jpegDrawCallback, true, x, y, w, h);
 }
 
 void img_next()
@@ -73,7 +74,7 @@ void img_next()
     {
         img_index = 0;
     }
-    img_display(img_list[img_index]);
+    img_display(0, 0, 480, 480, img_list[img_index]);
 }
 
 int jpegDrawCallback(JPEGDRAW *pDraw)

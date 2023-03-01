@@ -8,7 +8,7 @@ extern Arduino_ST7701_RGBPanel *gfx;
 
 void img_init();
 void img_next();
-void img_display(String img_name);
+void img_display(int x, int y, int w, int h, String img_name);
 
 int get_img_list(fs::FS &fs, const char *dirname, String *list, int length);
 int jpegDrawCallback(JPEGDRAW *pDraw);

@@ -1,3 +1,6 @@
+#ifndef PAGE_H
+#define PAGE_H
+
 #include "config.h"
 #include "Button.h"
 #include "music.h"
@@ -25,3 +28,6 @@ void page_4();
 void time_display(int x,int y);
 
 void drawButton(Button b);
+void drawFlag(Button b);
+
+#endif

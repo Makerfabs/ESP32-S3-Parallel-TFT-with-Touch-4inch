@@ -126,11 +126,30 @@ void page_2()
 {
     Serial.println(F("2 page"));
 
-    gfx->fillScreen(YELLOW);
+    Button b_country;
+
+    b_country.set(20, 100, 150, 100, "/flag/image05.jpg", ENABLE);
+    // b_country.set(20, 100, 300, 200, "/flag/China.jpg", ENABLE);
+
+    gfx->fillScreen(BLUE);
+    drawFlag(b_country);
+
     while (1)
     {
-        Serial.println(F("2 page"));
-        vTaskDelay(2000);
+        if (touch_flag == 1)
+        {
+            touch_x_temp = touch_x;
+            touch_y_temp = touch_y;
+
+            if (b_country.checkTouch(touch_x_temp, touch_y_temp) != UNABLE)
+            {
+                vTaskDelay(200);
+                Serial.println(F("China"));
+            }
+
+            touch_flag = 0;
+        }
+        vTaskDelay(100);
     }
 }
 
@@ -200,4 +219,19 @@ void drawButton(Button b)
         gfx->fillRect(b_x + shadow_len, b_y + b_h, b_w, shadow_len, COLOR_SHADOW);
         gfx->fillRect(b_x + b_w, b_y + shadow_len, shadow_len, b_h, COLOR_SHADOW);
     }
+}
+
+void drawFlag(Button b)
+{
+    int b_x;
+    int b_y;
+    int b_w;
+    int b_h;
+    String text;
+    int textSize;
+
+    b.getFoDraw(&b_x, &b_y, &b_w, &b_h, &text, &textSize);
+
+    gfx->fillRect(b_x, b_y, b_w, b_h, BLACK);
+    img_display(b_x, b_y, b_w, b_h, text);
 }
