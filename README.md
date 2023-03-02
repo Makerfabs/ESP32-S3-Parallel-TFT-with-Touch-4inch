@@ -5,6 +5,7 @@ Version:		V1.1
 Author:			Vincent
 Create Date:	2023/2/4
 Note:
+		V1.2：Now support LovyanGFX！
 		V1.1: Add example and update readme.
 */
 ```
