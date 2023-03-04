@@ -5,6 +5,7 @@
 #include "Button.h"
 #include "music.h"
 #include "image.h"
+#include "weather.h"
 
 #define COLOR_BACKGROUND 0xEF9E
 #define COLOR_BUTTON WHITE
@@ -22,6 +23,7 @@ extern int touch_y;
 void page_main();
 void page_1();
 void page_2();
+void page_2_1(int country_num);
 void page_3();
 void page_4();
 

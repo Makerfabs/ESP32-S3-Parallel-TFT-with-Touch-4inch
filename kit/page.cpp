@@ -147,7 +147,7 @@ void page_2()
         b_countrys[i].set(20 + 220 * (i / 3), 60 + 140 * (i % 3), 200, 120, flag_list[i], ENABLE);
     }
 
-    gfx->fillScreen(BLUE);
+    gfx->fillScreen(COLOR_BACKGROUND);
 
     for (int i = 0; i < 6; i++)
         drawFlag(b_countrys[i]);
@@ -167,11 +167,31 @@ void page_2()
                 {
                     vTaskDelay(200);
                     Serial.println(i);
+                    page_2_1(i);
                 }
 
             touch_flag = 0;
         }
         vTaskDelay(100);
+    }
+}
+
+void page_2_1(int country_num)
+{
+    wifi_init(SSID, PWD);
+    time_zone_set(country_num);
+    // get_time();
+
+    long runtime = 0;
+
+    gfx->fillScreen(COLOR_BACKGROUND);
+    while (1)
+    {
+        if ((millis() - runtime) > 1000)
+        {
+            time_display(40, 20);
+            runtime = millis();
+        }
     }
 }
 
@@ -204,6 +224,18 @@ void page_4()
 // Normal function
 void time_display(int x, int y)
 {
+    struct tm timeinfo;
+
+    if (!getLocalTime(&timeinfo))
+    {
+        Serial.println("Failed to obtain time");
+        return;
+    }
+    Serial.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");
+
+    char time_temp[20];
+    sprintf(time_temp, "%02d:%02d:%02d", timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec);
+
     gfx->fillRect(x, y, 400, 160, COLOR_BACKGROUND);
     gfx->drawRect(x, y, 400, 160, COLOR_LINE);
     gfx->setTextColor(COLOR_TEXT);
@@ -212,7 +244,7 @@ void time_display(int x, int y)
     gfx->setCursor(x + 20, y + 10);
     gfx->println("22/12/31");
     gfx->setCursor(x + 20, y + 90);
-    gfx->println("23:59:59");
+    gfx->println(time_temp);
 }
 
 // Other function
