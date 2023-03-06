@@ -20,14 +20,18 @@ extern int touch_flag;
 extern int touch_x;
 extern int touch_y;
 
+extern String city_list[B_COUNTY_NUM];
+extern int zone_list[B_COUNTY_NUM];
+extern String flag_list[B_COUNTY_NUM];
+
 void page_main();
 void page_1();
 void page_2();
-void page_2_1(int country_num);
 void page_3();
 void page_4();
 
-void time_display(int x,int y);
+void time_display(int x, int y, int country_num);
+void weather_display(int x, int y, int country_num);
 
 void drawButton(Button b);
 void drawFlag(Button b);

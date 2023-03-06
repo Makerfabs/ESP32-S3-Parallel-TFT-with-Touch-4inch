@@ -8,6 +8,8 @@
 #include <Audio.h>
 #include <Arduino_GFX_Library.h>
 #include <TAMC_GT911.h>
+#include <ArduinoJson.h>
+#include <HTTPClient.h>
 
 #include "JpegFunc.h"
 
@@ -33,5 +35,11 @@
 #define TOUCH_MAP_X2 0
 #define TOUCH_MAP_Y1 480
 #define TOUCH_MAP_Y2 0
+
+#define B_NUM_MAIN 4
+#define B_COUNTY_NUM 8
+
+#define SSID "Makerfabs"
+#define PWD "20160704"
 
 #endif

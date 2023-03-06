@@ -1,7 +1,5 @@
 #include "page.h"
 
-#define B_NUM_MAIN 4
-
 int touch_x_temp = 0;
 int touch_y_temp = 0;
 
@@ -126,72 +124,53 @@ void page_2()
 {
     Serial.println(F("2 page"));
 
-    String flag_list[6] =
-        {
-            "/flag/china.jpg",
-            "/flag/russia.jpg",
-            "/flag/usa.jpg",
-            "/flag/england.jpg",
-            "/flag/france.jpg",
-            "/flag/german.jpg"};
+    Button b_countrys[B_COUNTY_NUM];
+    int country_index = 0;
 
-    // Button b_country;
-
-    // b_country.set(20, 100, 200, 120, "/flag/image05.jpg", ENABLE);
-    // b_country.set(20, 100, 150, 100, "/flag/china.jpg", ENABLE);
-
-    Button b_countrys[6];
-
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < B_COUNTY_NUM; i++)
     {
-        b_countrys[i].set(20 + 220 * (i / 3), 60 + 140 * (i % 3), 200, 120, flag_list[i], ENABLE);
+        b_countrys[i].set(20 + 110 * (i % (B_COUNTY_NUM / 2)), 330 + 70 * (i / (B_COUNTY_NUM / 2)), 100, 60, flag_list[i], ENABLE);
     }
 
     gfx->fillScreen(COLOR_BACKGROUND);
 
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < B_COUNTY_NUM; i++)
         drawFlag(b_countrys[i]);
 
+    wifi_init(SSID, PWD);
+    time_zone_set(country_index);
+
+    weather_display(20, 120, country_index);
+
+    long runtime_1 = 0;
     touch_flag = 0;
-    vTaskDelay(200);
 
     while (1)
     {
+        if ((millis() - runtime_1) > 1000)
+        {
+            time_display(20, 20, country_index);
+            runtime_1 = millis();
+        }
+
         if (touch_flag == 1)
         {
             touch_x_temp = touch_x;
             touch_y_temp = touch_y;
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < B_COUNTY_NUM; i++)
                 if (b_countrys[i].checkTouch(touch_x_temp, touch_y_temp) != UNABLE)
                 {
                     vTaskDelay(200);
                     Serial.println(i);
-                    page_2_1(i);
+                    country_index = i;
+                    time_zone_set(i);
+                    // page_2_1(i);
                 }
 
             touch_flag = 0;
         }
         vTaskDelay(100);
-    }
-}
-
-void page_2_1(int country_num)
-{
-    wifi_init(SSID, PWD);
-    time_zone_set(country_num);
-    // get_time();
-
-    long runtime = 0;
-
-    gfx->fillScreen(COLOR_BACKGROUND);
-    while (1)
-    {
-        if ((millis() - runtime) > 1000)
-        {
-            time_display(40, 20);
-            runtime = millis();
-        }
     }
 }
 
@@ -222,29 +201,55 @@ void page_4()
 }
 
 // Normal function
-void time_display(int x, int y)
+void time_display(int x, int y, int country_num)
 {
     struct tm timeinfo;
+
+    gfx->fillRect(x, y, 420, 80, COLOR_BACKGROUND);
+    // gfx->drawRect(x, y, 420, 80, COLOR_LINE);
+    gfx->setTextColor(COLOR_TEXT);
+    gfx->setTextSize(4);
 
     if (!getLocalTime(&timeinfo))
     {
         Serial.println("Failed to obtain time");
+        gfx->setCursor(x, y + 10);
+        gfx->println("NTC initing....");
         return;
     }
     Serial.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");
 
     char time_temp[20];
-    sprintf(time_temp, "%02d:%02d:%02d", timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec);
 
-    gfx->fillRect(x, y, 400, 160, COLOR_BACKGROUND);
-    gfx->drawRect(x, y, 400, 160, COLOR_LINE);
-    gfx->setTextColor(COLOR_TEXT);
-    gfx->setTextSize(8);
-
-    gfx->setCursor(x + 20, y + 10);
-    gfx->println("22/12/31");
-    gfx->setCursor(x + 20, y + 90);
+    sprintf(time_temp, "%02d/%02d/%02d %s",
+            timeinfo.tm_year - 100, timeinfo.tm_mon, timeinfo.tm_mday, city_list[country_num]);
+    gfx->setCursor(x, y + 10);
     gfx->println(time_temp);
+
+    sprintf(time_temp, "%02d:%02d:%02d UTC %d",
+            timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec, zone_list[country_num]);
+    gfx->setCursor(x, y + 50);
+    gfx->println(time_temp);
+}
+
+void weather_display(int x, int y, int country_num)
+{
+    gfx->fillRect(x, y, 420, 160, COLOR_BACKGROUND);
+    gfx->drawRect(x, y, 420, 160, COLOR_LINE);
+
+    gfx->setTextColor(COLOR_TEXT);
+    gfx->setTextSize(4);
+
+    gfx->setCursor(x + 10, y + 20);
+    gfx->println("Temp:");
+
+    gfx->setCursor(x + 10, y + 60);
+    gfx->println("Humi:");
+
+    gfx->setCursor(x + 10, y + 100);
+    gfx->println("Weather:");
+
+    img_display(x + 280, y + 20, 120, 120, "/image01.jpg");
 }
 
 // Other function
