@@ -165,7 +165,9 @@ void page_2()
                     Serial.println(i);
                     country_index = i;
                     time_zone_set(i);
-                    // page_2_1(i);
+
+                    time_display(20, 20, country_index);
+                    weather_display(20, 120, i);
                 }
 
             touch_flag = 0;
@@ -205,7 +207,7 @@ void time_display(int x, int y, int country_num)
 {
     struct tm timeinfo;
 
-    gfx->fillRect(x, y, 420, 80, COLOR_BACKGROUND);
+    gfx->fillRect(x, y, 460, 80, COLOR_BACKGROUND);
     // gfx->drawRect(x, y, 420, 80, COLOR_LINE);
     gfx->setTextColor(COLOR_TEXT);
     gfx->setTextSize(4);
@@ -234,22 +236,37 @@ void time_display(int x, int y, int country_num)
 
 void weather_display(int x, int y, int country_num)
 {
+    float temperature = 0.0;
+    float humidty = 0.0;
+    String weather = "NULL";
+    int weather_num = 0;
+
     gfx->fillRect(x, y, 420, 160, COLOR_BACKGROUND);
     gfx->drawRect(x, y, 420, 160, COLOR_LINE);
 
+    weather_request2(country_num, &temperature, &humidty, &weather, &weather_num);
+
     gfx->setTextColor(COLOR_TEXT);
-    gfx->setTextSize(4);
+    gfx->setTextSize(3);
 
+    String temp = "";
+
+    temp = temp + "Temp:" + temperature;
     gfx->setCursor(x + 10, y + 20);
-    gfx->println("Temp:");
+    gfx->println(temp);
 
+    temp = "";
+    temp = temp + "Humi:" + humidty;
     gfx->setCursor(x + 10, y + 60);
-    gfx->println("Humi:");
+    gfx->println(temp);
 
     gfx->setCursor(x + 10, y + 100);
-    gfx->println("Weather:");
+    gfx->println(weather);
 
-    img_display(x + 280, y + 20, 120, 120, "/image01.jpg");
+    temp = "";
+    temp = temp + "/weather/" + weather_num + ".jpg";
+
+    img_display(x + 280, y + 20, 120, 120, temp);
 }
 
 // Other function
