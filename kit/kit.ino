@@ -106,6 +106,9 @@ void Task_Touch(void *pvParameters) // This is a task.
             }
         }
 
+        if (touch_flag == -1)
+            vTaskDelete(NULL);
+
         vTaskDelay(100);
     }
 }

@@ -10,6 +10,7 @@
 #include <TAMC_GT911.h>
 #include <ArduinoJson.h>
 #include <HTTPClient.h>
+#include <Adafruit_MLX90640.h>
 
 #include "JpegFunc.h"
 
@@ -41,5 +42,9 @@
 
 #define SSID "Makerfabs"
 #define PWD "20160704"
+
+
+// MLX90640
+#define MLX_I2C_ADDR 0x33
 
 #endif

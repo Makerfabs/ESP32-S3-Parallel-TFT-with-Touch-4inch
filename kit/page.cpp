@@ -208,13 +208,34 @@ void page_3()
 // 热成像
 void page_4()
 {
-    Serial.println(F("4 page"));
+    float max_temp = 0.0;
+    String temp = "";
+    // 关闭触屏抗干扰
+    touch_flag = -1;
+    vTaskDelay(1000);
 
-    gfx->fillScreen(BLUE);
+    Serial.println(F("4 page"));
+    mlx_init();
+    mlx_frame_malloc();
+
+    gfx->fillScreen(BLACK);
+    gfx->setTextColor(WHITE);
+    gfx->setTextSize(4);
+
     while (1)
     {
-        Serial.println(F("4 page"));
-        vTaskDelay(2000);
+        // mlx_serial();
+        max_temp = mlx_img();
+
+        temp = "";
+        temp = temp + "Max temp:" + max_temp;
+
+        gfx->fillRect(0, 321, 480, 79, BLACK);
+
+        gfx->setCursor(20, 340);
+        gfx->println(temp);
+
+        vTaskDelay(100);
     }
 }
 
