@@ -149,10 +149,10 @@ void page_2()
         gfx->println(ssid);
         gfx->println("Your password:");
         gfx->println(pwd);
-    }
 
-    while (1)
-        vTaskDelay(100);
+        while (1)
+            vTaskDelay(100);
+    }
 
     time_zone_set(country_index);
 
