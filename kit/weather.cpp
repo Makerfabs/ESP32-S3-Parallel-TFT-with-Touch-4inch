@@ -23,8 +23,8 @@ String city_list[B_COUNTY_NUM] =
         "London",     // england
         "Paris",      // france
         "Canberra",   // Australia
-        "Brazil",   // Brazil
-        "Berlin"     // german
+        "Brazil",     // Brazil
+        "Berlin"      // german
 };
 
 String flag_list[B_COUNTY_NUM] =
@@ -42,25 +42,7 @@ String wind_txt[] =
     {"north", "northeast", "east", "southeast",
      "south", "southwest", "west", "northwest"};
 
-int wifi_init(String ssid, String pwd)
-{
-    // WiFi.begin(ssid.c_str(), pwd.c_str());
-    WiFi.begin(SSID, PWD);
 
-    int connect_count = 0;
-    while (WiFi.status() != WL_CONNECTED)
-    {
-        vTaskDelay(500);
-        Serial.print(".");
-        connect_count++;
-        if (connect_count > 10)
-            return 0;
-    }
-
-    // configTime((const long)(timezone * 3600), 0, ntpServer);
-
-    return 1;
-}
 
 void time_zone_set(int country_num)
 {

@@ -137,7 +137,23 @@ void page_2()
     for (int i = 0; i < B_COUNTY_NUM; i++)
         drawFlag(b_countrys[i]);
 
-    wifi_init(SSID, PWD);
+    if (wifi_init() != 1)
+    {
+        gfx->setTextColor(COLOR_TEXT);
+        gfx->setTextSize(2);
+
+        gfx->setCursor(0, 0);
+        gfx->println("Can't connect your wifi.");
+        gfx->println("Please check wifi.txt in SD card.");
+        gfx->println("Your ssid:");
+        gfx->println(ssid);
+        gfx->println("Your password:");
+        gfx->println(pwd);
+    }
+
+    while (1)
+        vTaskDelay(100);
+
     time_zone_set(country_index);
 
     weather_display(20, 120, country_index);

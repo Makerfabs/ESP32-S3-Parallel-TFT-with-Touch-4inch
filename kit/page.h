@@ -6,6 +6,7 @@
 #include "music.h"
 #include "image.h"
 #include "weather.h"
+#include "my_wifi.h"
 
 #define COLOR_BACKGROUND 0xEF9E
 #define COLOR_BUTTON WHITE
@@ -23,6 +24,9 @@ extern int touch_y;
 extern String city_list[B_COUNTY_NUM];
 extern int zone_list[B_COUNTY_NUM];
 extern String flag_list[B_COUNTY_NUM];
+
+extern String ssid;
+extern String pwd;
 
 void page_main();
 void page_1();

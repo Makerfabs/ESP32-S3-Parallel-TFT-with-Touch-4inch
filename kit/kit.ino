@@ -46,6 +46,8 @@ void setup()
         Serial.println(F("ERROR: SD Mount Failed!"));
     }
 
+    wifi_config_read();
+
     // 不能设为同优先级，不然可能跳过同级有限的任务
     // 需要有个0优先级的来刷新看门狗
     xTaskCreatePinnedToCore(Task_TFT, "Task_TFT", 20480, NULL, 0, NULL, 0);
