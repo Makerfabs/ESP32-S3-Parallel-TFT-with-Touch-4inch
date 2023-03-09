@@ -31,13 +31,9 @@ void setup()
     pinMode(TOUCH_RST, OUTPUT);
     delay(100);
     digitalWrite(TOUCH_RST, LOW);
-    delay(500);
+    delay(1000);
     digitalWrite(TOUCH_RST, HIGH);
-    delay(500);
-    digitalWrite(TOUCH_RST, LOW);
-    delay(500);
-    digitalWrite(TOUCH_RST, HIGH);
-    delay(500);
+    delay(1000);
 
     Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
     ts.begin();
