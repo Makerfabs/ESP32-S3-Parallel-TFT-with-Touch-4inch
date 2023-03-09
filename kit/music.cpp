@@ -48,6 +48,7 @@ void Task_Audio(void *pvParameters)
     while (1)
     {
         audio.loop();
+        vTaskDelay(1);
         // Serial.println(F("Task_Audio"));
     }
 }
