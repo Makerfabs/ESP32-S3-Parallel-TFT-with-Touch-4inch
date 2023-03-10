@@ -100,8 +100,7 @@ int get_music_list(fs::FS &fs, const char *dirname, String *list, int length)
 // 开始新歌
 void open_new_song(String filename)
 {
-    audio.pauseResume();
-    vTaskDelay(500);
+
     audio.connecttoFS(SD, filename.c_str());
     Serial.println("**********start a new sound************");
 }
@@ -122,6 +121,9 @@ void audio_eof_mp3(const char *info)
 // 切歌
 void next_song()
 {
+    audio.pauseResume();
+    vTaskDelay(500);
+
     if (music_index < music_num - 1)
         music_index++;
     else

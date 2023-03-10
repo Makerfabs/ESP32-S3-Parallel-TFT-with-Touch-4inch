@@ -70,8 +70,8 @@ void page_1()
     Button b_mute;
     Button b_next;
 
-    b_mute.set(20, 420, 80, 40, "Mute", ENABLE);
-    b_next.set(120, 420, 80, 40, "Next", ENABLE);
+    b_mute.set(20, 410, 120, 60, "Mute", ENABLE);
+    b_next.set(160, 410, 120, 60, "Next", ENABLE);
 
     gfx->fillScreen(BLACK);
 
@@ -314,7 +314,7 @@ void drawButton(Button b)
 
     b.getFoDraw(&b_x, &b_y, &b_w, &b_h, &text, &textSize);
 
-    gfx->fillRect(b_x, b_y, b_w, b_h, COLOR_BUTTON);
+    // gfx->fillRect(b_x, b_y, b_w, b_h, COLOR_BUTTON);
     gfx->drawRect(b_x, b_y, b_w, b_h, COLOR_LINE);
     gfx->setCursor(b_x + 20, b_y + 20);
     gfx->setTextColor(COLOR_TEXT);
