@@ -11,6 +11,9 @@
 #include <ArduinoJson.h>
 #include <HTTPClient.h>
 #include <Adafruit_MLX90640.h>
+#include <Adafruit_SGP30.h>
+#include <Adafruit_SHT31.h>
+#include <ESPAsyncWebServer.h>
 
 #include "JpegFunc.h"
 
@@ -42,7 +45,6 @@
 
 #define SSID "Makerfabs"
 #define PWD "20160704"
-
 
 // MLX90640
 #define MLX_I2C_ADDR 0x33

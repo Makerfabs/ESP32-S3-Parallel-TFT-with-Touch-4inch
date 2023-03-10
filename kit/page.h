@@ -8,6 +8,7 @@
 #include "weather.h"
 #include "my_wifi.h"
 #include "cam.h"
+#include "sensor.h"
 
 #define COLOR_BACKGROUND 0xEF9E
 #define COLOR_BUTTON WHITE

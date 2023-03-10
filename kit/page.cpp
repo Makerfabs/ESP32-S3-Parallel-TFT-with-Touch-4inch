@@ -197,12 +197,7 @@ void page_3()
 {
     Serial.println(F("3 page"));
 
-    gfx->fillScreen(GREEN);
-    while (1)
-    {
-        Serial.println(F("3 page"));
-        vTaskDelay(2000);
-    }
+    tvoc_task();
 }
 
 // 热成像
