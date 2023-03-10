@@ -282,15 +282,18 @@ void weather_display(int x, int y, int country_num)
     gfx->setTextSize(3);
 
     String temp = "";
+    char c_str[30];
 
-    temp = temp + "Temp:" + temperature;
+    sprintf(c_str, "Temp: %.1f C", temperature);
+    // temp = temp + "Temp:" + temperature;
     gfx->setCursor(x + 10, y + 20);
-    gfx->println(temp);
+    gfx->println(c_str);
 
-    temp = "";
-    temp = temp + "Humi:" + humidty;
+    sprintf(c_str, "Humi: %.1f %%", humidty);
+    // temp = "";
+    // temp = temp + "Humi:" + humidty;
     gfx->setCursor(x + 10, y + 60);
-    gfx->println(temp);
+    gfx->println(c_str);
 
     gfx->setCursor(x + 10, y + 100);
     gfx->println(weather);
