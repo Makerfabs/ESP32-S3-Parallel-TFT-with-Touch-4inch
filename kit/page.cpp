@@ -9,18 +9,21 @@ void page_main()
     Serial.println(F("Main page"));
 
     gfx->fillScreen(COLOR_BACKGROUND);
-    gfx->setCursor(20, 20);
     gfx->setTextColor(COLOR_TEXT);
-    gfx->setTextSize(4);
-    gfx->println("Main page");
+    gfx->setTextSize(3);
+
+    gfx->setCursor(20, 20);
+    gfx->println("Makerfabs ESP32-S3");
+    gfx->setCursor(20, 50);
+    gfx->println("4inch Development Kit");
 
     Button b[B_NUM_MAIN];
     String b_name[] = {"A", "B", "C", "D"};
 
-    b[0].set(40, 200, 160, 80, "xiangce", ENABLE);
-    b[1].set(280, 200, 160, 80, "weather", ENABLE);
-    b[2].set(40, 320, 160, 80, "sensor", ENABLE);
-    b[3].set(280, 320, 160, 80, "rechengxiang", ENABLE);
+    b[0].set(20, 200, 200, 80, "Music Frame", ENABLE);
+    b[1].set(240, 200, 200, 80, "Global Weather", ENABLE);
+    b[2].set(20, 320, 200, 80, "TVOC Monitor", ENABLE);
+    b[3].set(240, 320, 200, 80, "Thermal Camera", ENABLE);
 
     drawButton(b[0]);
     drawButton(b[1]);
