@@ -225,9 +225,9 @@ void page_4()
         temp = "";
         temp = temp + "Max temp:" + max_temp;
 
-        gfx->fillRect(0, 321, 480, 79, BLACK);
+        gfx->fillRect(0, 361, 480, 120, BLACK);
 
-        gfx->setCursor(20, 340);
+        gfx->setCursor(20, 365);
         gfx->println(temp);
 
         vTaskDelay(100);

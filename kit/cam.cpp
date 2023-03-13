@@ -109,6 +109,11 @@ void mlx_frame_malloc()
         Serial.println(F("inter_p Malloc error"));
     }
 
+    for (int i = 0; i < 32 * 24; i++)
+    {
+        *(temp_frame + i) = 20.0;
+    }
+
     for (int i = 0; i < OUTPUT_W * OUTPUT_H; i++)
     {
         *(inter_p + i) = 0x480F;
@@ -127,10 +132,10 @@ float mlx_img()
         return 0.0;
     }
 
-    filter_frame(frame, temp_frame);
+    // filter_frame(frame, temp_frame);
 
-    qusort(frame, 0, 32 * 24 - 1);
-    max_temp += frame[767];
+    mirror(frame);
+    filter(frame, temp_frame);
 
     // Display with 32*24 pixel
     // for (uint8_t h = 0; h < 24; h++)
@@ -144,6 +149,9 @@ float mlx_img()
 
     interpolation(temp_frame, inter_p);
     gfx->draw16bitRGBBitmap(0, 0, inter_p, OUTPUT_W, OUTPUT_H);
+
+    qusort(frame, 0, 32 * 24 - 1);
+    max_temp += frame[767];
 
     return max_temp;
 }
@@ -192,29 +200,53 @@ void qusort(float s[], int start, int end)
 }
 
 // Filter temperature data and change camera direction
-void filter_frame(float *in, float *out)
+// void filter_frame(float *in, float *out)
+// {
+//     if (MLX_MIRROR == 1)
+//     {
+//         for (int i = 0; i < 32 * 24; i++)
+//         {
+//             if (FILTER_ENABLE == 1)
+//                 out[i] = (out[i] + in[i]) / 2;
+//             else
+//                 out[i] = in[i];
+//         }
+//     }
+//     else
+//     {
+//         for (int i = 0; i < 24; i++)
+//             for (int j = 0; j < 32; j++)
+//             {
+//                 if (FILTER_ENABLE == 1)
+//                     out[32 * i + 31 - j] = (out[32 * i + 31 - j] + in[32 * i + j]) / 2;
+//                 else
+//                     out[32 * i + 31 - j] = in[32 * i + j];
+//             }
+//     }
+// }
+
+void mirror(float *in)
 {
     if (MLX_MIRROR == 1)
     {
-        for (int i = 0; i < 32 * 24; i++)
-        {
-            if (FILTER_ENABLE == 1)
-                out[i] = (out[i] + in[i]) / 2;
-            else
-                out[i] = in[i];
-        }
-    }
-    else
-    {
-        for (int i = 0; i < 24; i++)
-            for (int j = 0; j < 32; j++)
+        float temp = 0.0;
+        for (int y = 0; y < 24; y++)
+            for (int x = 0; x < 16; x++)
             {
-                if (FILTER_ENABLE == 1)
-                    out[32 * i + 31 - j] = (out[32 * i + 31 - j] + in[32 * i + j]) / 2;
-                else
-                    out[32 * i + 31 - j] = in[32 * i + j];
+                temp = in[x + 32 * y];
+                in[x + 32 * y] = in[31 - x + 32 * y];
+                in[31 - x + 32 * y] = temp;
             }
     }
+}
+
+void filter(float *in, float *out)
+{
+    for (int i = 0; i < 32 * 24; i++)
+        if (FILTER_ENABLE == 1)
+            out[i] = (out[i] + in[i]) / 2;
+        else
+            out[i] = in[i];
 }
 
 // Transform 32*24 to 320 * 240 pixel
@@ -229,7 +261,6 @@ void interpolation(float *data, uint16_t *out)
             out[h * 15 * 480 + w * 15] = map_f(data[h * 32 + w], MINTEMP, MAXTEMP);
         }
     }
-
 
     for (int h = 0; h < 320; h += 15)
     {
