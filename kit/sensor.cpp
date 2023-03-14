@@ -133,8 +133,8 @@ void sensor_init()
 
 void sensor_ui_display()
 {
-    gfx->fillScreen(COLOR_BACKGROUND);
-    gfx->setTextColor(COLOR_TEXT);
+    gfx->fillScreen(gfx->color565(0, 100, 104));
+    gfx->setTextColor(WHITE);
     gfx->setTextSize(3);
 
     gfx->setCursor(10, 10);
@@ -172,7 +172,7 @@ void sensor_ui_display()
 void sensor_display()
 {
 
-    gfx->fillRect(240, 60, 120, 420, COLOR_BACKGROUND);
+    gfx->fillRect(240, 60, 120, 420, gfx->color565(0, 100, 104));
 
     int x_pos = 240;
     int y = 1;
