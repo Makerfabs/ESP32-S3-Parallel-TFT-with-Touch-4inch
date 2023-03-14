@@ -42,9 +42,46 @@ The image should be in.jpg format, preferably 480 by 480 pixels.
 
 Music required format.mp3.
 
+And edit "wifi.txt", change your own WiFi ssid and WiFi password.
+
+```
+SSID:[YOUR SSID]
+PASSWORD:[YOUR PWD]
+# Please change your own wifi setting in "[]".
+# WIFI name and password can only contain letters and numbers, the program is not fully compatible with special characters.
+```
 
 
 
+Insert SD card.
+
+
+
+## Music Frame
+
+JPG pictures and MP3 music in the root directory of the SD card are automatically played.
+
+
+
+## Global Weather
+
+Click on the flags of different countries to toggle different periods and show the weather in the capital.
+
+
+
+## TVOC Monitor
+
+Mabee CO2 needs to be connected to the I2C interface.
+
+Displays TVOC sensor measurements and provides a web page to access.
+
+You need to set up WiFi to use it.
+
+## Thermal Camera
+
+You need to connect Mabee MLX90640 to the I2C interface
+
+Simple thermal imaging camera.
 
 
 
