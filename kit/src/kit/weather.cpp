@@ -6,7 +6,7 @@ const char *ntpServer = "120.25.108.11";
 int zone_list[B_COUNTY_NUM] =
     {
         8,  // china
-        3,  // russia
+        9,  // japan
         -5, // usa
         0,  // england
         1,  // france
@@ -18,7 +18,7 @@ int zone_list[B_COUNTY_NUM] =
 String city_list[B_COUNTY_NUM] =
     {
         "Beijing",    // china
-        "Moscow",     // russia
+        "Tokyo",     // japan
         "Washington", // usa
         "London",     // england
         "Paris",      // france
@@ -30,7 +30,7 @@ String city_list[B_COUNTY_NUM] =
 String flag_list[B_COUNTY_NUM] =
     {
         "/flag/china.jpg",
-        "/flag/russia.jpg",
+        "/flag/japan.jpg",
         "/flag/usa.jpg",
         "/flag/england.jpg",
         "/flag/france.jpg",

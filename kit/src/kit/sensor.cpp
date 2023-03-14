@@ -106,242 +106,231 @@ if (!!window.EventSource) {
 
 uint32_t getAbsoluteHumidity(float temperature, float humidity)
 {
-    // approximation formula from Sensirion SGP30 Driver Integration chapter 3.15
-    const float absoluteHumidity = 216.7f * ((humidity / 100.0f) * 6.112f * exp((17.62f * temperature) / (243.12f + temperature)) / (273.15f + temperature)); // [g/m^3]
-    const uint32_t absoluteHumidityScaled = static_cast<uint32_t>(1000.0f * absoluteHumidity);                                                                // [mg/m^3]
-    return absoluteHumidityScaled;
+  // approximation formula from Sensirion SGP30 Driver Integration chapter 3.15
+  const float absoluteHumidity = 216.7f * ((humidity / 100.0f) * 6.112f * exp((17.62f * temperature) / (243.12f + temperature)) / (273.15f + temperature)); // [g/m^3]
+  const uint32_t absoluteHumidityScaled = static_cast<uint32_t>(1000.0f * absoluteHumidity);                                                                // [mg/m^3]
+  return absoluteHumidityScaled;
 }
 
 void sensor_init()
 {
-    Serial.println("Check Sensor");
+  Serial.println("Check Sensor");
 
-    Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
-    Wire.setClock(100000UL);
+  Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
+  Wire.setClock(100000UL);
 
-    if (!sht31.begin(0x44))
-    {
-        Serial.println("SHT31 not found.");
-    }
-    delay(100);
+  if (!sht31.begin(0x44))
+  {
+    Serial.println("SHT31 not found.");
+  }
+  delay(100);
 
-    if (!sgp.begin())
-    {
-        Serial.println("SGP30 not found.");
-    }
+  if (!sgp.begin())
+  {
+    Serial.println("SGP30 not found.");
+  }
 }
 
 void sensor_ui_display()
 {
-    gfx->fillScreen(gfx->color565(0, 100, 104));
-    gfx->setTextColor(WHITE);
-    gfx->setTextSize(3);
+  gfx->fillScreen(gfx->color565(0, 100, 104));
+  gfx->setTextColor(WHITE);
+  gfx->setTextSize(3);
 
-    gfx->setCursor(10, 10);
-    gfx->println("Environment Monitor");
-    gfx->setCursor(10, 40);
-    gfx->println(server_ip);
+  gfx->setCursor(10, 10);
+  gfx->println("Environment Monitor");
+  gfx->setCursor(10, 40);
+  gfx->println(server_ip);
 
-    int x_pos = 10;
-    int y = 1;
-    gfx->setCursor(x_pos, 60 + height * y++);
-    gfx->println("Humidity");
-    gfx->setCursor(x_pos, 60 + height * y++);
-    gfx->println("Temperature");
-    gfx->setCursor(x_pos, 60 + height * y++);
-    gfx->println("TVOC");
-    gfx->setCursor(x_pos, 60 + height * y++);
-    gfx->println("eCO2");
-    gfx->setCursor(x_pos, 60 + height * y++);
-    gfx->println("Raw H2");
-    gfx->setCursor(x_pos, 60 + height * y++);
-    gfx->println("Raw Ethanol");
+  int x_pos = 10;
+  int y = 1;
+  gfx->setCursor(x_pos, 60 + height * y++);
+  gfx->println("Humidity");
+  gfx->setCursor(x_pos, 60 + height * y++);
+  gfx->println("Temperature");
+  gfx->setCursor(x_pos, 60 + height * y++);
+  gfx->println("TVOC");
+  gfx->setCursor(x_pos, 60 + height * y++);
+  gfx->println("eCO2");
+  gfx->setCursor(x_pos, 60 + height * y++);
+  gfx->println("Raw H2");
+  gfx->setCursor(x_pos, 60 + height * y++);
+  gfx->println("Raw Ethanol");
 
-    x_pos = 360;
-    y = 1;
-    gfx->setCursor(x_pos, 60 + height * y++);
-    gfx->println("%");
-    gfx->setCursor(x_pos, 60 + height * y++);
-    gfx->println("C");
-    gfx->setCursor(x_pos, 60 + height * y++);
-    gfx->println("ppb");
-    gfx->setCursor(x_pos, 60 + height * y++);
-    gfx->println("ppm");
+  x_pos = 360;
+  y = 1;
+  gfx->setCursor(x_pos, 60 + height * y++);
+  gfx->println("%");
+  gfx->setCursor(x_pos, 60 + height * y++);
+  gfx->println("C");
+  gfx->setCursor(x_pos, 60 + height * y++);
+  gfx->println("ppb");
+  gfx->setCursor(x_pos, 60 + height * y++);
+  gfx->println("ppm");
 }
 
 void sensor_display()
 {
 
-    gfx->fillRect(240, 60, 120, 420, gfx->color565(0, 100, 104));
+  gfx->fillRect(240, 60, 120, 420, gfx->color565(0, 100, 104));
 
-    int x_pos = 240;
-    int y = 1;
+  int x_pos = 240;
+  int y = 1;
 
-    gfx->setCursor(x_pos, 60 + height * y++);
-    gfx->println(humidity);
-    gfx->setCursor(x_pos, 60 + height * y++);
-    gfx->println(temperature);
-    gfx->setCursor(x_pos, 60 + height * y++);
-    gfx->println(TVOC);
-    gfx->setCursor(x_pos, 60 + height * y++);
-    gfx->println(eCO2);
-    gfx->setCursor(x_pos, 60 + height * y++);
-    gfx->println(H2);
-    gfx->setCursor(x_pos, 60 + height * y++);
-    gfx->println(Ethanol);
-    gfx->setCursor(x_pos, 60 + height * y++);
+  gfx->setCursor(x_pos, 60 + height * y++);
+  gfx->println(humidity);
+  gfx->setCursor(x_pos, 60 + height * y++);
+  gfx->println(temperature);
+  gfx->setCursor(x_pos, 60 + height * y++);
+  gfx->println(TVOC);
+  gfx->setCursor(x_pos, 60 + height * y++);
+  gfx->println(eCO2);
+  gfx->setCursor(x_pos, 60 + height * y++);
+  gfx->println(H2);
+  gfx->setCursor(x_pos, 60 + height * y++);
+  gfx->println(Ethanol);
+  gfx->setCursor(x_pos, 60 + height * y++);
 }
 
 void getSGP30Readings()
 {
-    unsigned long endTime = 1;
+  unsigned long endTime = 1;
 
-    humidity = sht31.readHumidity();
-    temperature = sht31.readTemperature();
+  humidity = sht31.readHumidity();
+  temperature = sht31.readTemperature();
 
-    if (!isnan(temperature))
-    { // check if 'is not a number'
-        Serial.print("Temp *C = ");
-        Serial.println(temperature);
-    }
-    else
-    {
-        Serial.println("Failed to read temperature");
-    }
+  if (!isnan(temperature))
+  { // check if 'is not a number'
+    Serial.print("Temp *C = ");
+    Serial.println(temperature);
+  }
+  else
+  {
+    Serial.println("Failed to read temperature");
+  }
 
-    if (!isnan(humidity))
-    { // check if 'is not a number'
-        Serial.print("Hum. % = ");
-        Serial.println(humidity);
-    }
-    else
-    {
-        Serial.println("Failed to read humidity");
-    }
+  if (!isnan(humidity))
+  { // check if 'is not a number'
+    Serial.print("Hum. % = ");
+    Serial.println(humidity);
+  }
+  else
+  {
+    Serial.println("Failed to read humidity");
+  }
 
-    sgp.setHumidity(getAbsoluteHumidity(temperature, humidity));
+  sgp.setHumidity(getAbsoluteHumidity(temperature, humidity));
 
-    if (!sgp.IAQmeasure())
-    {
-        Serial.println("Measurement failed");
-        return;
-    }
-    Serial.print("TVOC ");
-    Serial.print(TVOC = sgp.TVOC);
-    Serial.print(" ppb\t");
-    Serial.print("eCO2 ");
-    Serial.print(eCO2 = sgp.eCO2);
-    Serial.println(" ppm");
+  if (!sgp.IAQmeasure())
+  {
+    Serial.println("Measurement failed");
+    return;
+  }
+  Serial.print("TVOC ");
+  Serial.print(TVOC = sgp.TVOC);
+  Serial.print(" ppb\t");
+  Serial.print("eCO2 ");
+  Serial.print(eCO2 = sgp.eCO2);
+  Serial.println(" ppm");
 
-    if (!sgp.IAQmeasureRaw())
-    {
-        Serial.println("Raw Measurement failed");
-        return;
-    }
+  if (!sgp.IAQmeasureRaw())
+  {
+    Serial.println("Raw Measurement failed");
+    return;
+  }
 
-    tvoc = TVOC;
+  tvoc = TVOC;
 }
 
 String processor(const String &var)
 {
-    getSGP30Readings();
-    if (var == "TEMPERATURE")
-    {
-        return String(temperature);
-    }
-    else if (var == "HUMIDITY")
-    {
-        return String(humidity);
-    }
-    else if (var == "TVOC")
-    {
-        return String(tvoc);
-    }
-    else if (var == "GAS")
-    {
-        return String(eCO2);
-    }
+  getSGP30Readings();
+  if (var == "TEMPERATURE")
+  {
+    return String(temperature);
+  }
+  else if (var == "HUMIDITY")
+  {
+    return String(humidity);
+  }
+  else if (var == "TVOC")
+  {
+    return String(tvoc);
+  }
+  else if (var == "GAS")
+  {
+    return String(eCO2);
+  }
 }
 
 void tvoc_task()
 {
-    // Set the device as a Station and Soft Access Point simultaneously
-    WiFi.mode(WIFI_AP_STA);
+  Serial.print("Station IP Address: ");
+  server_ip = server_ip + WiFi.localIP().toString();
+  Serial.println(server_ip);
+  Serial.println();
 
-    // Set device as a Wi-Fi Station
-    WiFi.begin(ssid.c_str(), pwd.c_str());
-    while (WiFi.status() != WL_CONNECTED)
-    {
-        delay(1000);
-        Serial.println("Setting as a Wi-Fi Station..");
-    }
-    Serial.print("Station IP Address: ");
-    server_ip = server_ip + WiFi.localIP().toString();
-    Serial.println(server_ip);
-    Serial.println();
+  sensor_ui_display();
+  // Init SGP30 sensor
+  sensor_init();
 
-    sensor_ui_display();
+  // Handle Web Server
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
+            { request->send_P(200, "text/html", index_html, processor); });
 
-    // Init SGP30 sensor
-    sensor_init();
-
-    // Handle Web Server
-    server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
-              { request->send_P(200, "text/html", index_html, processor); });
-
-    // Handle Web Server Events
-    events.onConnect([](AsyncEventSourceClient *client)
-                     {
+  // Handle Web Server Events
+  events.onConnect([](AsyncEventSourceClient *client)
+                   {
       if(client->lastId()){
         Serial.printf("Client reconnected! Last message ID that it got is: %u\n", client->lastId());
       }
       // send event with message "hello!", id current millis
       // and set reconnect delay to 1 second
       client->send("hello!", NULL, millis(), 10000); });
-    server.addHandler(&events);
-    server.begin();
+  server.addHandler(&events);
+  server.begin();
 
-    int counter = 0;
+  int counter = 0;
 
-    while (1)
+  while (1)
+  {
+    counter++;
+    if (counter == 30)
     {
-        counter++;
-        if (counter == 30)
-        {
-            counter = 0;
-            uint16_t TVOC_base, eCO2_base;
+      counter = 0;
+      uint16_t TVOC_base, eCO2_base;
 
-            if (!sgp.getIAQBaseline(&eCO2_base, &TVOC_base))
-            {
-                Serial.println("Failed to get baseline readings");
-                return;
-            }
-            // Serial.print("****Baseline values: eCO2: 0x");
-            // Serial.print(eCO2_base, HEX);
-            // Serial.print(" & TVOC: 0x");
-            // Serial.println(TVOC_base, HEX);
-        }
-
-        if ((millis() - lastTime) > timerDelay)
-        {
-            getSGP30Readings();
-            Serial.printf("Temperature = %.2f ºC \n", temperature);
-            Serial.printf("Humidity = %.2f % \n", humidity);
-            Serial.printf("TVOC = %.2f ppb \n", tvoc);
-            Serial.printf("eCO2 = %.2f ppm \n", eCO2);
-            Serial.println();
-
-            // Send Events to the Web Server with the Sensor Readings
-            events.send("ping", NULL, millis());
-            events.send(String(temperature).c_str(), "temperature", millis());
-            events.send(String(humidity).c_str(), "humidity", millis());
-            events.send(String(tvoc).c_str(), "tvoc", millis());
-            events.send(String(eCO2).c_str(), "gas", millis());
-
-            lastTime = millis();
-        }
-        // getSGP30Readings();
-        sensor_display();
-        delay(1000);
+      if (!sgp.getIAQBaseline(&eCO2_base, &TVOC_base))
+      {
+        Serial.println("Failed to get baseline readings");
+        return;
+      }
+      // Serial.print("****Baseline values: eCO2: 0x");
+      // Serial.print(eCO2_base, HEX);
+      // Serial.print(" & TVOC: 0x");
+      // Serial.println(TVOC_base, HEX);
     }
+
+    if ((millis() - lastTime) > timerDelay)
+    {
+      getSGP30Readings();
+      Serial.printf("Temperature = %.2f ºC \n", temperature);
+      Serial.printf("Humidity = %.2f % \n", humidity);
+      Serial.printf("TVOC = %.2f ppb \n", tvoc);
+      Serial.printf("eCO2 = %.2f ppm \n", eCO2);
+      Serial.println();
+
+      // Send Events to the Web Server with the Sensor Readings
+      events.send("ping", NULL, millis());
+      events.send(String(temperature).c_str(), "temperature", millis());
+      events.send(String(humidity).c_str(), "humidity", millis());
+      events.send(String(tvoc).c_str(), "tvoc", millis());
+      events.send(String(eCO2).c_str(), "gas", millis());
+
+      lastTime = millis();
+    }
+    // getSGP30Readings();
+    sensor_display();
+    delay(1000);
+  }
 }

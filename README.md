@@ -1,15 +1,16 @@
 # Makerfabs ESP32-S3 Parallel TFT with Touch 4inch
+
 ```c++
 /*
-Version:		V1.1
-Author:			Vincent
-Create Date:	2023/2/4
+Version:        V1.1
+Author:            Vincent
+Create Date:    2023/2/4
 Note:
-		V1.1: Add example and update readme.
+        V1.1: Add example and update readme.
 */
 ```
 
-[toc]
+[TOC]
 
 ![main](md_pic/main.jpg)
 
@@ -19,8 +20,6 @@ Note:
 
 [Makerfabs Wiki](https://wiki.makerfabs.com/)
 
-
-
 # Makerfabs ESP32-S3 Parallel TFT with Touch 4inch
 
 ## Intruduce
@@ -28,8 +27,6 @@ Note:
 Product Link ：[ESP32-S3 Parallel TFT with Touch 4.0" 480*480 ST7701](https://www.makerfabs.com/esp32-s3-parallel-tft-with-touch-4-inch.html)
 
 Wiki Link : [ESP32-S3 Parallel 4.0" TFT with Touch](https://wiki.makerfabs.com/ESP32_S3_Parallel_4.0_TFT_with_Touch.html)
-
-
 
 The Latest ESP32-S3 4.0 inch display with 480*480 resolution, it integrated display/ touch/ audio speaker/ Lipo charger, to make this product ideal for applications such as IoT controlling, electronic photo frame, etc.
 

@@ -200,6 +200,28 @@ void page_3()
 {
     Serial.println(F("3 page"));
 
+    gfx->fillScreen(COLOR_BACKGROUND);
+
+    // Set the device as a Station and Soft Access Point simultaneously
+    WiFi.mode(WIFI_AP_STA);
+
+    if (wifi_init() != 1)
+    {
+        gfx->setTextColor(COLOR_TEXT);
+        gfx->setTextSize(2);
+
+        gfx->setCursor(0, 0);
+        gfx->println("Can't connect your wifi.");
+        gfx->println("Please check wifi.txt in SD card.");
+        gfx->println("Your ssid:");
+        gfx->println(ssid);
+        gfx->println("Your password:");
+        gfx->println(pwd);
+
+        while (1)
+            vTaskDelay(100);
+    }
+
     tvoc_task();
 }
 
