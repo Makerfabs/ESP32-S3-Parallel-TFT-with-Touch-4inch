@@ -2,11 +2,12 @@
 
 ```c++
 /*
-Version:        V1.0
+Version:        V1.1
 Author:         Vincent
 Create Date:    2023/3/14
 Note:
 
+    2023/5/15    V1.1：Change weather API and icons.
 */
 ```
 
@@ -51,23 +52,15 @@ PASSWORD:[YOUR PWD]
 # WIFI name and password can only contain letters and numbers, the program is not fully compatible with special characters.
 ```
 
-
-
 Insert SD card.
-
-
 
 ## Music Frame
 
 JPG pictures and MP3 music in the root directory of the SD card are automatically played.
 
-
-
 ## Global Weather
 
 Click on the flags of different countries to toggle different periods and show the weather in the capital.
-
-
 
 ## TVOC Monitor
 
@@ -82,10 +75,6 @@ You need to set up WiFi to use it.
 You need to connect Mabee MLX90640 to the I2C interface
 
 Simple thermal imaging camera.
-
-
-
-
 
 # Code
 
@@ -120,8 +109,6 @@ Install libraries from Library Manager：
 
 - Using 1.2.8  Version  JPEGDEC
 
-
-
 Install libraries from Github：
 
 - Using 2.0.0  Version  ESP32-audioI2S-master
@@ -130,14 +117,8 @@ Install libraries from Github：
 
 - Using 1.1.1  Version  AsyncTCP-master
 
-
-
 Use type-c use cable connect USB-TTL to PC.
 
 Select "ESP32-S3 DEV Module"
 
 Select PSRAM "OPI PSRAM"
-
-
-
-

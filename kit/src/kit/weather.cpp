@@ -18,7 +18,7 @@ int zone_list[B_COUNTY_NUM] =
 String city_list[B_COUNTY_NUM] =
     {
         "Beijing",    // china
-        "Tokyo",     // japan
+        "Tokyo",      // japan
         "Washington", // usa
         "London",     // england
         "Paris",      // france
@@ -41,8 +41,6 @@ String flag_list[B_COUNTY_NUM] =
 String wind_txt[] =
     {"north", "northeast", "east", "southeast",
      "south", "southwest", "west", "northwest"};
-
-
 
 void time_zone_set(int country_num)
 {
@@ -124,7 +122,8 @@ void weather_request2(int country_num, float *temperature, float *humidty, Strin
 
     Serial.print("[HTTP] begin...\n");
 
-    String url = "https://free-api.heweather.net/s6/weather/now?location=" + city_list[country_num] + "&key=2d63e6d9a95c4e8f8d3f65d0b5bcdf7f&lang=en";
+    String url = "http://api.weatherapi.com/v1/current.json?key=271578bfbe12438085782536232404&q=" + city_list[country_num] + "&aqi=no";
+
     http.begin(url);
 
     Serial.print("[HTTP] GET...\n");
@@ -148,15 +147,25 @@ void weather_request2(int country_num, float *temperature, float *humidty, Strin
             deserializeJson(doc, payload);
             JsonObject obj = doc.as<JsonObject>();
 
-            String cond_num = doc["HeWeather6"][0]["now"]["cond_code"];
-            String cond_txt = doc["HeWeather6"][0]["now"]["cond_txt"];
-            String tmp = doc["HeWeather6"][0]["now"]["tmp"];
-            String hum = doc["HeWeather6"][0]["now"]["hum"];
+            // int cond_num = doc["current"]["condition"]["code"];
+            String icon_num = doc["current"]["condition"]["icon"];
+            String cond_txt = doc["current"]["condition"]["text"];
+            float tmp = doc["current"]["temp_c"];
+            float hum = doc["current"]["humidity"];
 
-            *temperature = tmp.toFloat();
-            *humidty = hum.toFloat();
+            //"//cdn.weatherapi.com/weather/64x64/day/113.png"
+            icon_num.replace("//cdn.weatherapi.com/weather/64x64/", "");
+            icon_num.replace(".png", "");
+            icon_num.replace("day/", "");
+            icon_num.replace("night/", "");
+
+            *temperature = tmp;
+            *humidty = hum;
             *weather = cond_txt;
-            *weather_num = cond_num.toInt();
+            *weather_num = icon_num.toInt();
+
+            String text = city_list[country_num] + cond_txt + ",icon:" + icon_num + ", Temperature" + tmp + " C, humidity " + hum + " %.";
+            Serial.println(text);
         }
     }
     else
