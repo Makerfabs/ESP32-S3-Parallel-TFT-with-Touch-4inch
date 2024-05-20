@@ -5,6 +5,13 @@ Just search in Arduino Library section: **AnimatedGIF** and install it.
 ### A big fan of Larry Bank work to simplify things in Arduino
 
 Using “COOKED” pixels, it means that the library takes care of managing the palette conversion for your desired destination pixel type.
+You just need to give it a buffer the size of the GIF canvas like this:
+
+```C
+uint8_t *buf = (uint8_t *)malloc(gif.getCanvasWidth() * gif.getCanvasHeight());
+gif.setFrameBuf(buf);
+gif.setDrawType(GIF_DRAW_COOKED);
+```
 
 ### How to improve it even faster
 
